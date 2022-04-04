@@ -1,4 +1,4 @@
-package A1.Apteka.Apteka.Enums;
+package A1.Apteka.Apteka.Enum;
 
 public enum Gender {
     male,
