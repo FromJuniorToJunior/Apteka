@@ -1,6 +1,6 @@
 package A1.Apteka.Apteka.Model;
 
-import A1.Apteka.Apteka.Enums.Gender;
+import A1.Apteka.Apteka.Enum.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
