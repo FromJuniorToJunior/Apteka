@@ -24,9 +24,12 @@ public class Anxieties {
     private double price;
     @Column
     private boolean otc;
+    @Lob
+    private byte[] img;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "anxieties")
     private List<Comment> comments;
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "anxieties")
     private List<Order> orders;
+
 
 }

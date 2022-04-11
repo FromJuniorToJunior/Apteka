@@ -1,5 +1,6 @@
 package A1.Apteka.Apteka.Controller;
 
+import A1.Apteka.Apteka.Controller.CRUD.CRUD;
 import A1.Apteka.Apteka.MapperDTO.MapperImpl;
 import A1.Apteka.Apteka.Model.Address;
 import A1.Apteka.Apteka.Model.ModelDTO.AddressDTO;
@@ -12,12 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/address")
-public class addressController implements AddressCRUD {
+public class addressController implements CRUD<AddressDTO,Address> {
     @Autowired
     private AddressRepository addressRepository;
     @Autowired
@@ -25,7 +27,7 @@ public class addressController implements AddressCRUD {
     @Autowired
     private AddressService addressService;
 
-    private ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
+    final private ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
     /**
      * Post - > body - > raw to create new address
@@ -38,8 +40,9 @@ public class addressController implements AddressCRUD {
      * @"lnumber" : "30"
      * }
      */
+    @Override
     @PostMapping(value = "/create", produces = "application/json")
-    public ResponseEntity<String> createAddress(@RequestBody Address address) {
+    public ResponseEntity<String> createObject(@RequestBody Address address) {
 
         try {
             addressRepository.save(address);
@@ -53,7 +56,7 @@ public class addressController implements AddressCRUD {
 
     @Override
     @GetMapping(value = "/get/all", produces = "application/json")
-    public List<AddressDTO> getAddresses() {
+    public List<AddressDTO> getObjects() {
 
         return addressRepository.findAll()
                 .stream()
@@ -63,24 +66,25 @@ public class addressController implements AddressCRUD {
 
     @Override
     @GetMapping(value = "/get", produces = "application/json")
-    public AddressDTO getAddress(@RequestParam("id") Long id) {
+    public AddressDTO getObject(@RequestParam("id") Long id) {
         return mapper.addressToDTO(addressRepository.znajdz(id));
     }
 
     @Override
     @PostMapping(value = "/update", produces = "application/json", consumes = "application/json")
-    public AddressDTO updateAddress(@RequestBody Address address) {
+    public AddressDTO updateObject(@RequestBody Address address) {
         return addressService.updateAddress(address);
     }
 
     @Override
     @DeleteMapping(value = "/delete", produces = "application/json", consumes = "application/json")
-    public AddressDTO deleteAddress(@RequestBody Address address) {
+    public AddressDTO deleteObject(@RequestBody Address address) {
         try {
             addressRepository.delete(addressRepository.znajdz(address.getAddress_id()));
         }catch (Exception e){
-            System.out.println(e.getStackTrace());
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
         return mapper.addressToDTO(address);
     }
+
 }
