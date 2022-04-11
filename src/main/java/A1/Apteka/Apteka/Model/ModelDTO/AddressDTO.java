@@ -1,4 +1,4 @@
-package A1.Apteka.Apteka.ModelDTO;
+package A1.Apteka.Apteka.Model.ModelDTO;
 
 import A1.Apteka.Apteka.Model.User;
 import lombok.Data;
@@ -18,11 +18,17 @@ import java.util.List;
  **/
 @Data
 public class AddressDTO {
-    private Long address_id;
     private String country;
     private String city;
     private String street;
     private String bnumer;
     private String lnumber;
-    private List<User> users;
+
+    public AddressDTO(String country, String city, String street, String bnumer, String lnumber) {
+        this.country = country;
+        this.city = city;
+        this.street = street;
+        this.bnumer = bnumer;
+        this.lnumber = lnumber;
+    }
 }

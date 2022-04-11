@@ -1,4 +1,4 @@
-package A1.Apteka.Apteka.ModelDTO;
+package A1.Apteka.Apteka.Model.ModelDTO;
 
 import A1.Apteka.Apteka.Enum.Gender;
 import A1.Apteka.Apteka.Model.Address;
@@ -8,15 +8,12 @@ import lombok.Data;
 import java.util.List;
 @Data
 public class UserDTO {
-
-    private Long user_id;
     private String nickname;
     private String name;
     private String surname;
     private Gender gender;
     private int age;
     private String email;
-    private String password;
     private String phone;
     private List<Comment> comment;
     private Address address;
