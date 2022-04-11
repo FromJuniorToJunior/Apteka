@@ -17,23 +17,26 @@ public class MapperImpl implements ModelMapper {
     @Override
     public AnxietiesDTO anxietiesToDTO(Anxieties anxieties) {
 
-        return new AnxietiesDTO(anxieties.getName(), anxieties.getPrice(),anxieties.isOtc(),anxieties.getImg());
+        return new AnxietiesDTO(anxieties.getName(), anxieties.getPrice(),anxieties.isOtc(),anxieties.getImg(), anxieties.getAmount());
     }
 
     @Override
     public CommentDTO commentToDTO(Comment comment) {
-        return new CommentDTO(comment.getContent(),comment.getDate(),comment.getUser());
+        return new CommentDTO(comment.getContent(),comment.getDate(),this.userToDTO(comment.getUser()));
     }
 
     @Override
     public OrderDTO orderToDTO(Order order) {
-       return null;
+        List<AnxietiesDTO> anxietiesDTOList = order.getAnxieties().stream().map(this::anxietiesToDTO).collect(Collectors.toList());
+       return new OrderDTO(order.isRealized(), this.userToDTO(order.getUser()),anxietiesDTOList);
     }
 
     @Override
     public UserDTO userToDTO(User user) {
+
         List<CommentDTO> commment = user.getComment().stream().map(this::commentToDTO).collect(Collectors.toList());
         List<OrderDTO> orders = user.getOrders().stream().map(this::orderToDTO).collect(Collectors.toList());
-        return null;
+        return new UserDTO(user.getNickname(), user.getName(), user.getSurname(), user.getGender(),user.getAge(), user.getEmail(),
+                user.getPhone(), commment,this.addressToDTO(user.getAddress()),orders);
     }
 }

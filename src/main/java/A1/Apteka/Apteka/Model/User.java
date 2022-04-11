@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "user")
 public class User {
@@ -36,10 +36,10 @@ public class User {
     @Column(length = 12)
     private String phone;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<Comment> comment;
+    private List<Comment> comment = new ArrayList<>();
     @ManyToOne(fetch = FetchType.EAGER)
     private Address address;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 
 }

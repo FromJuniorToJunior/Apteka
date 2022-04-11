@@ -8,7 +8,7 @@ import java.text.DateFormat;
 
 @Data
 public class CommentDTO {
-    public CommentDTO(String content, DateFormat date, User user) {
+    public CommentDTO(String content, DateFormat date, UserDTO user) {
         this.content = content;
         this.date = date;
         this.user = user;
@@ -16,6 +16,6 @@ public class CommentDTO {
 
     private String content;
     private DateFormat date;
-    private User user;
+    private UserDTO user;
 }
 

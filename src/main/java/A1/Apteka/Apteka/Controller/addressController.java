@@ -5,7 +5,7 @@ import A1.Apteka.Apteka.MapperDTO.MapperImpl;
 import A1.Apteka.Apteka.Model.Address;
 import A1.Apteka.Apteka.Model.ModelDTO.AddressDTO;
 import A1.Apteka.Apteka.Repository.AddressRepository;
-import A1.Apteka.Apteka.Services.AddressService;
+import A1.Apteka.Apteka.Services.UpdateServiceCRUD;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class addressController implements CRUD<AddressDTO,Address> {
     @Autowired
     private MapperImpl mapper;
     @Autowired
-    private AddressService addressService;
+    private UpdateServiceCRUD addressService;
 
     final private ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
 

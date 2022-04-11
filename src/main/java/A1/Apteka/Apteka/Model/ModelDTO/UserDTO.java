@@ -11,12 +11,12 @@ import java.util.List;
 @Data
 public class UserDTO {
     public UserDTO(String nickname, String name, String surname, Gender gender,
-                   String age, String email, String phone, List<String> comment,
-                   String address, List<String> orders) {
+                   int age, String email, String phone, List<CommentDTO> comment,
+                   AddressDTO address, List<OrderDTO> orders) {
         this.nickname = nickname;
         this.name = name;
         this.surname = surname;
-        this.gender = gender.toString();
+        this.gender = gender;
         this.age = age;
         this.email = email;
         this.phone = phone;
@@ -28,12 +28,12 @@ public class UserDTO {
     private String nickname;
     private String name;
     private String surname;
-    private String gender;
-    private String age;
+    private Gender gender;
+    private int age;
     private String email;
     private String phone;
-    private List<String> comment;
-    private String address;
-    private List<String> orders;
+    private List<CommentDTO> comment;
+    private AddressDTO address;
+    private List<OrderDTO> orders;
 
 }
