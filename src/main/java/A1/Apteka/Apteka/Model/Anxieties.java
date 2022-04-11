@@ -26,6 +26,8 @@ public class Anxieties {
     private boolean otc;
     @Lob
     private byte[] img;
+    @Column
+    private int amount;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "anxieties")
     private List<Comment> comments;
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "anxieties")
