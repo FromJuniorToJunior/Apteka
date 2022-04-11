@@ -18,7 +18,7 @@ public class Anxieties {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long anxieties_id;
-    @Column(length = 30, unique = true)
+    @Column(length = 30)
     private String name;
     @Column
     private double price;
@@ -26,8 +26,6 @@ public class Anxieties {
     private boolean otc;
     @Lob
     private byte[] img;
-    @Column
-    private int amount;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "anxieties")
     private List<Comment> comments;
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "anxieties")

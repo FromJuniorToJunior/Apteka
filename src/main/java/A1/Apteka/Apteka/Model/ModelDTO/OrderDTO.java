@@ -7,7 +7,13 @@ import java.util.List;
 
 @Data
 public class OrderDTO {
+    public OrderDTO(boolean realized, User user, List<AnxietiesDTO> anxieties) {
+        this.realized = realized;
+        this.user = user;
+        this.anxieties = anxieties;
+    }
+
     private boolean realized;
     private User user;
-    private List<Anxieties> anxieties;
+    private List<AnxietiesDTO> anxieties;
 }
