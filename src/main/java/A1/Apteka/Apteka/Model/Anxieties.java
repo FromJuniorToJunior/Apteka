@@ -18,15 +18,18 @@ public class Anxieties {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long anxieties_id;
-    @Column(length = 30)
+    @Column(length = 30, unique = true)
     private String name;
     @Column
     private double price;
     @Column
     private boolean otc;
+    @Lob
+    private byte[] img;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "anxieties")
     private List<Comment> comments;
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "anxieties")
     private List<Order> orders;
+
 
 }
