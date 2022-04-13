@@ -55,7 +55,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .usernameParameter("email")
-                .defaultSuccessUrl("/main")
                 .permitAll()
                 .and()
                 .logout().addLogoutHandler(this.customLogoutHandler).logoutSuccessUrl("/").permitAll();
