@@ -31,7 +31,7 @@ public class User {
     private int age;
     @Column(length = 25, unique = true)
     private String email;
-    @Column(length = 30)
+    @Column(length = 70)
     private String password;
     @Column(length = 12)
     private String phone;
