@@ -33,7 +33,7 @@ public class MapperImpl implements ModelMapper {
         List<AnxietiesDTO> anxietiesDTOList = order.getAnxieties().stream().map(this::anxietiesToDTO)
                 .collect(Collectors.toList());
         return new OrderDTO(order.isRealized(), anxietiesDTOList, order.getUser().getName() + " " +
-                order.getUser().getSurname(), order.getCost());
+                order.getUser().getSurname(), order.getCost(), order.getDate());
     }
 
     @Override
