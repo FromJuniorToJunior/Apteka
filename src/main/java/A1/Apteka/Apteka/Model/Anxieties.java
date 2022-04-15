@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,6 +26,7 @@ public class Anxieties {
     @Column
     private boolean otc;
     @Lob
+    @Type(type = "org.hibernate.type.ImageType")
     private byte[] img;
     @Column
     private int amount;

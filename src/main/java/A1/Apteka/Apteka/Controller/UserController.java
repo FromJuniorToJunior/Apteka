@@ -34,13 +34,13 @@ public class UserController implements CRUD<UserDTO, User> {
 
 
     @Override
-    @GetMapping(value = "/get/users", produces = "application/json")
+    @GetMapping(value = "/users", produces = "application/json")
     public List<UserDTO> getObjects() {
         return userRepository.findAll().stream().map(mapper::userToDTO).collect(Collectors.toList());
     }
 
     @Override
-    @GetMapping(value = "/get", produces = "application/json")
+    @GetMapping(value = "/user", produces = "application/json")
     public @ResponseBody
     UserDTO getObject(@RequestParam("id") Long id) {
         try {

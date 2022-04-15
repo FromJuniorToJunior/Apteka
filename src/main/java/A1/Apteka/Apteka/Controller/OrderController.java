@@ -2,9 +2,12 @@ package A1.Apteka.Apteka.Controller;
 
 import A1.Apteka.Apteka.Controller.CRUD.CRUD;
 import A1.Apteka.Apteka.MapperDTO.MapperImpl;
+import A1.Apteka.Apteka.Model.Anxieties;
 import A1.Apteka.Apteka.Model.ModelDTO.OrderDTO;
 import A1.Apteka.Apteka.Model.Order;
 import A1.Apteka.Apteka.Model.User;
+import A1.Apteka.Apteka.Repository.AddressRepository;
+import A1.Apteka.Apteka.Repository.AnxietiesRepository;
 import A1.Apteka.Apteka.Repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +27,8 @@ public class OrderController implements CRUD<OrderDTO, Order> {
     private OrderRepository orderRepository;
     @Autowired
     private MapperImpl mapper;
-
+    @Autowired
+    private AnxietiesRepository anxietiesRepository;
 
     @Override
     @GetMapping(value = "/get/orders", produces = "application/json")
@@ -47,16 +51,37 @@ public class OrderController implements CRUD<OrderDTO, Order> {
 
     @Override
     @PostMapping(value = "/create/order", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> createObject(Order object) {
+    public ResponseEntity<String> createObject(@RequestBody Order object) {
+        Order or = new Order();
+
         try {
-            object.setUser((User) session.getAttribute("user"));
-            orderRepository.save(object);
-            return ResponseEntity.ok().body("Order created:" + System.lineSeparator() + mapper.orderToDTO(object));
+            or.setUser((User) session.getAttribute("user"));
+            or.setRealized(object.isRealized());
+            for (Anxieties anx : object.getAnxieties()
+            ) {
+                or.getAnxieties().add(anxietiesRepository.findAnxByName(anx.getName()));
+            }
+            double cost=or.getCost();
+            for (Anxieties anx: or.getAnxieties()
+                 ) {
+                cost+=anx.getPrice();
+            }
+                or.setCost(cost);
+            for (Anxieties anx: or.getAnxieties()
+                 ) {
+                anx.getOrders().add(or);
+
+            }
+
+             orderRepository.save(or);
+
+            return ResponseEntity.ok().body("Order created:" + System.lineSeparator()  /*mapper.orderToDTO(or)*/);
         } catch (Exception e) {
-            return ResponseEntity.ok().body("Cannot create order: " + System.lineSeparator() + mapper.orderToDTO(object));
+            return ResponseEntity.ok().body("Cannot create order: " + System.lineSeparator() /*+ mapper.orderToDTO(or)*/);
         }
     }
-//ToDo updateOrder (not important)
+
+    //ToDo updateOrder (not important)
     @Override
     public OrderDTO updateObject(Order object) {
         return null;

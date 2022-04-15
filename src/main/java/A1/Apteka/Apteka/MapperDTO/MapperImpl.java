@@ -22,13 +22,14 @@ public class MapperImpl implements ModelMapper {
 
     @Override
     public CommentDTO commentToDTO(Comment comment) {
-        return new CommentDTO(comment.getContent(),comment.getDate(),this.userToDTO(comment.getUser()));
+        return new CommentDTO(comment.getContent(),comment.getDate(),comment.getUser().getName()+ " " + comment.getUser().getSurname() );
     }
 
     @Override
     public OrderDTO orderToDTO(Order order) {
         List<AnxietiesDTO> anxietiesDTOList = order.getAnxieties().stream().map(this::anxietiesToDTO).collect(Collectors.toList());
-       return new OrderDTO(order.isRealized(), this.userToDTO(order.getUser()),anxietiesDTOList);
+       return new OrderDTO(order.isRealized(),anxietiesDTOList, order.getUser().getName()+" "+ order.getUser().getSurname()
+       , order.getCost());
     }
 
     @Override

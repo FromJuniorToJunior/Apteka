@@ -67,7 +67,11 @@ public class addressController implements CRUD<AddressDTO,Address> {
     @Override
     @GetMapping(value = "/get", produces = "application/json")
     public AddressDTO getObject(@RequestParam("id") Long id) {
-        return mapper.addressToDTO(addressRepository.znajdz(id));
+        try {
+            return mapper.addressToDTO(addressRepository.znajdz(id));
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override

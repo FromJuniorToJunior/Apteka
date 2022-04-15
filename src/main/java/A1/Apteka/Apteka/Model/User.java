@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -35,10 +38,12 @@ public class User {
     private String password;
     @Column(length = 12)
     private String phone;
+    @LazyCollection(value = LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Comment> comment = new ArrayList<>();
     @ManyToOne(fetch = FetchType.EAGER)
     private Address address;
+    @LazyCollection(value = LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 
