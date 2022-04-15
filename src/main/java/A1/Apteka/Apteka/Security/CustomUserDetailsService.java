@@ -26,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Użytkownik nie istnieje");
         }
-        session.setAttribute("user",user);
+        session.setAttribute("user", user);
         return new CustomUserDetails(user);
     }
 }

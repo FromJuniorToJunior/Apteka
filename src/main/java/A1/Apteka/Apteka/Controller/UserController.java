@@ -2,8 +2,6 @@ package A1.Apteka.Apteka.Controller;
 
 import A1.Apteka.Apteka.Controller.CRUD.CRUD;
 import A1.Apteka.Apteka.MapperDTO.MapperImpl;
-import A1.Apteka.Apteka.Model.Address;
-import A1.Apteka.Apteka.Model.ModelDTO.AddressDTO;
 import A1.Apteka.Apteka.Model.ModelDTO.UserDTO;
 import A1.Apteka.Apteka.Model.User;
 import A1.Apteka.Apteka.Repository.AddressRepository;
@@ -59,25 +57,27 @@ public class UserController implements CRUD<UserDTO, User> {
             userRepository.save(object);
             return ResponseEntity.ok().body("User created: " + System.lineSeparator() + mapper.userToDTO(object));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Process rejected"+ e);
+            return ResponseEntity.badRequest().body("Process rejected" + e);
         }
     }
 
     @Override
     @PostMapping(value = "/update", produces = "application/json", consumes = "application/json")
-    public @ResponseBody UserDTO updateObject(@RequestBody User object) {
+    public @ResponseBody
+    UserDTO updateObject(@RequestBody User object) {
         return updateServiceCRUD.updateUser(object);
     }
 
     @Override
     @DeleteMapping(value = "/delete", produces = "application/json", consumes = "application/json")
-    public @ResponseBody UserDTO deleteObject(@RequestBody User object) {
-            try {
-                userRepository.delete(userRepository.findByUserId(object.getUser_id()));
-            }catch (Exception e){
-                System.out.println(Arrays.toString(e.getStackTrace()));
-            }
-            return mapper.userToDTO(object);
+    public @ResponseBody
+    UserDTO deleteObject(@RequestBody User object) {
+        try {
+            userRepository.delete(userRepository.findByUserId(object.getUser_id()));
+        } catch (Exception e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
+        return mapper.userToDTO(object);
+    }
 
 }

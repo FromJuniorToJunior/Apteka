@@ -25,15 +25,15 @@ public class Order {
     @Column
     private boolean realized;
     @Column
-    private double cost=0;
+    private double cost = 0;
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
     @LazyCollection(value = LazyCollectionOption.FALSE)
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "anxieties_orders",
-            joinColumns = { @JoinColumn(name = "order_id") },
-            inverseJoinColumns = { @JoinColumn(name = "anxieties_id") }
+            joinColumns = {@JoinColumn(name = "order_id")},
+            inverseJoinColumns = {@JoinColumn(name = "anxieties_id")}
     )
-    private List<Anxieties> anxieties= new ArrayList<>();
+    private List<Anxieties> anxieties = new ArrayList<>();
 }

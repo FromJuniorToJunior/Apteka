@@ -1,11 +1,9 @@
 package A1.Apteka.Apteka.Model;
 
 import A1.Apteka.Apteka.Enum.Gender;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -39,7 +37,7 @@ public class User {
     @Column(length = 12)
     private String phone;
     @LazyCollection(value = LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Comment> comment = new ArrayList<>();
     @ManyToOne(fetch = FetchType.EAGER)
     private Address address;

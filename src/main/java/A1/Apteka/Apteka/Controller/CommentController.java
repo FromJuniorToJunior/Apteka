@@ -2,8 +2,6 @@ package A1.Apteka.Apteka.Controller;
 
 import A1.Apteka.Apteka.Controller.CRUD.CRUD;
 import A1.Apteka.Apteka.MapperDTO.MapperImpl;
-
-import A1.Apteka.Apteka.Model.Anxieties;
 import A1.Apteka.Apteka.Model.Comment;
 import A1.Apteka.Apteka.Model.ModelDTO.CommentDTO;
 import A1.Apteka.Apteka.Model.User;
@@ -14,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -47,7 +44,7 @@ public class CommentController implements CRUD<CommentDTO, Comment> {
         try {
             return mapper.commentToDTO(commentRepository.findCommentById(id));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -66,20 +63,20 @@ public class CommentController implements CRUD<CommentDTO, Comment> {
             commentRepository.save(comment);
 
 
-                return ResponseEntity.ok().body("Comment created: "+ System.lineSeparator() + mapper.commentToDTO(comment));
-            } catch (Exception e) {
-                return null;
-            }
-        }
-
-        //ToDo to do but not important
-        @Override
-        public CommentDTO updateObject (Comment object){
-            return null;
-        }
-
-        @Override
-        public CommentDTO deleteObject (Comment object){
+            return ResponseEntity.ok().body("Comment created: " + System.lineSeparator() + mapper.commentToDTO(comment));
+        } catch (Exception e) {
             return null;
         }
     }
+
+    //ToDo to do but not important
+    @Override
+    public CommentDTO updateObject(Comment object) {
+        return null;
+    }
+
+    @Override
+    public CommentDTO deleteObject(Comment object) {
+        return null;
+    }
+}

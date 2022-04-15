@@ -6,7 +6,6 @@ import A1.Apteka.Apteka.Model.Anxieties;
 import A1.Apteka.Apteka.Model.ModelDTO.OrderDTO;
 import A1.Apteka.Apteka.Model.Order;
 import A1.Apteka.Apteka.Model.User;
-import A1.Apteka.Apteka.Repository.AddressRepository;
 import A1.Apteka.Apteka.Repository.AnxietiesRepository;
 import A1.Apteka.Apteka.Repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,19 +60,19 @@ public class OrderController implements CRUD<OrderDTO, Order> {
             ) {
                 or.getAnxieties().add(anxietiesRepository.findAnxByName(anx.getName()));
             }
-            double cost=or.getCost();
-            for (Anxieties anx: or.getAnxieties()
-                 ) {
-                cost+=anx.getPrice();
+            double cost = or.getCost();
+            for (Anxieties anx : or.getAnxieties()
+            ) {
+                cost += anx.getPrice();
             }
-                or.setCost(cost);
-            for (Anxieties anx: or.getAnxieties()
-                 ) {
+            or.setCost(cost);
+            for (Anxieties anx : or.getAnxieties()
+            ) {
                 anx.getOrders().add(or);
 
             }
 
-             orderRepository.save(or);
+            orderRepository.save(or);
 
             return ResponseEntity.ok().body("Order created:" + System.lineSeparator()  /*mapper.orderToDTO(or)*/);
         } catch (Exception e) {

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/address")
-public class addressController implements CRUD<AddressDTO,Address> {
+public class addressController implements CRUD<AddressDTO, Address> {
     @Autowired
     private AddressRepository addressRepository;
     @Autowired
@@ -69,7 +69,7 @@ public class addressController implements CRUD<AddressDTO,Address> {
     public AddressDTO getObject(@RequestParam("id") Long id) {
         try {
             return mapper.addressToDTO(addressRepository.znajdz(id));
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -85,7 +85,7 @@ public class addressController implements CRUD<AddressDTO,Address> {
     public AddressDTO deleteObject(@RequestBody Address address) {
         try {
             addressRepository.delete(addressRepository.znajdz(address.getAddress_id()));
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
         return mapper.addressToDTO(address);
