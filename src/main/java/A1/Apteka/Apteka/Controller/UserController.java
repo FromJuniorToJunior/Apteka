@@ -2,8 +2,6 @@ package A1.Apteka.Apteka.Controller;
 
 import A1.Apteka.Apteka.Controller.CRUD.CRUD;
 import A1.Apteka.Apteka.MapperDTO.MapperImpl;
-import A1.Apteka.Apteka.Model.Address;
-import A1.Apteka.Apteka.Model.ModelDTO.AddressDTO;
 import A1.Apteka.Apteka.Model.ModelDTO.UserDTO;
 import A1.Apteka.Apteka.Model.User;
 import A1.Apteka.Apteka.Repository.AddressRepository;
@@ -11,6 +9,7 @@ import A1.Apteka.Apteka.Repository.UserRepository;
 import A1.Apteka.Apteka.Services.UpdateServiceCRUD;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -28,16 +27,18 @@ public class UserController implements CRUD<UserDTO, User> {
     private AddressRepository addressRepository;
     @Autowired
     private UpdateServiceCRUD updateServiceCRUD;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
-    @GetMapping(value = "/get/users", produces = "application/json")
+    @GetMapping(value = "/users", produces = "application/json")
     public List<UserDTO> getObjects() {
         return userRepository.findAll().stream().map(mapper::userToDTO).collect(Collectors.toList());
     }
 
     @Override
-    @GetMapping(value = "/get", produces = "application/json")
+    @GetMapping(value = "/user", produces = "application/json")
     public @ResponseBody
     UserDTO getObject(@RequestParam("id") Long id) {
         try {
@@ -51,29 +52,32 @@ public class UserController implements CRUD<UserDTO, User> {
     @PostMapping(value = "/create", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> createObject(@RequestBody User object) {
         try {
+            object.setPassword(passwordEncoder.encode(object.getPassword()));
             addressRepository.save(object.getAddress());
             userRepository.save(object);
             return ResponseEntity.ok().body("User created: " + System.lineSeparator() + mapper.userToDTO(object));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Process rejected"+ e);
+            return ResponseEntity.badRequest().body("Process rejected" + e);
         }
     }
 
     @Override
     @PostMapping(value = "/update", produces = "application/json", consumes = "application/json")
-    public @ResponseBody UserDTO updateObject(@RequestBody User object) {
+    public @ResponseBody
+    UserDTO updateObject(@RequestBody User object) {
         return updateServiceCRUD.updateUser(object);
     }
 
     @Override
     @DeleteMapping(value = "/delete", produces = "application/json", consumes = "application/json")
-    public @ResponseBody UserDTO deleteObject(@RequestBody User object) {
-            try {
-                userRepository.delete(userRepository.findByUserId(object.getUser_id()));
-            }catch (Exception e){
-                System.out.println(Arrays.toString(e.getStackTrace()));
-            }
-            return mapper.userToDTO(object);
+    public @ResponseBody
+    UserDTO deleteObject(@RequestBody User object) {
+        try {
+            userRepository.delete(userRepository.findByUserId(object.getUser_id()));
+        } catch (Exception e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
+        return mapper.userToDTO(object);
+    }
 
 }

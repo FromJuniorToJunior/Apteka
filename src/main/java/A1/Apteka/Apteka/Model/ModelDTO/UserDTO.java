@@ -1,9 +1,6 @@
 package A1.Apteka.Apteka.Model.ModelDTO;
 
 import A1.Apteka.Apteka.Enum.Gender;
-import A1.Apteka.Apteka.Model.Address;
-import A1.Apteka.Apteka.Model.Comment;
-import A1.Apteka.Apteka.Model.Order;
 import lombok.Data;
 
 import java.util.List;

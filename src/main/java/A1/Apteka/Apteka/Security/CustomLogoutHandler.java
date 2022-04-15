@@ -6,10 +6,11 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 @Service
 public class CustomLogoutHandler implements LogoutHandler {
     @Override
     public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) {
-        //AccountController.user=null;
+
     }
 }

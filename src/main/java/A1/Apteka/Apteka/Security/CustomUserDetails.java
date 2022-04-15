@@ -2,12 +2,13 @@ package A1.Apteka.Apteka.Security;
 
 import A1.Apteka.Apteka.Model.User;
 import org.springframework.security.core.GrantedAuthority;
+
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 public class CustomUserDetails implements UserDetails {
-    private User user;
+    private final User user;
 
     public CustomUserDetails(User user) {
         this.user = user;
@@ -17,8 +18,9 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
+
     @Override
-    public boolean isEnabled(){
+    public boolean isEnabled() {
         return true;
     }
 
@@ -29,7 +31,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return user.getName();
     }
 
     @Override
@@ -48,8 +50,7 @@ public class CustomUserDetails implements UserDetails {
     }
 
 
-    public String getFullName(){
-        return user.getName() + " " +user.getSurname();
+    public String getFullName() {
+        return user.getName() + " " + user.getSurname();
     }
 }
-

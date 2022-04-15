@@ -19,9 +19,9 @@ public class UpdateServiceCRUD {
     @Autowired
     private MapperImpl mapper;
 
-    public AddressDTO updateAddress(Address address){
-        try{
-            if(addressRepository.znajdz(address.getAddress_id())!=null){
+    public AddressDTO updateAddress(Address address) {
+        try {
+            if (addressRepository.znajdz(address.getAddress_id()) != null) {
                 Address old = addressRepository.znajdz(address.getAddress_id());
                 old.setCity(address.getCity());
                 old.setCountry(address.getCountry());
@@ -33,14 +33,15 @@ public class UpdateServiceCRUD {
             }
             return null;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
-    public UserDTO updateUser(User user){
-        try{
-            User old =userRepository.findByUserId(user.getUser_id());
-            if (old!=null){
+
+    public UserDTO updateUser(User user) {
+        try {
+            User old = userRepository.findByUserId(user.getUser_id());
+            if (old != null) {
                 old.setAge(user.getAge());
                 old.setEmail(user.getEmail());
                 old.setGender(user.getGender());
@@ -51,7 +52,7 @@ public class UpdateServiceCRUD {
                 userRepository.save(old);
             }
             return mapper.userToDTO(old);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }

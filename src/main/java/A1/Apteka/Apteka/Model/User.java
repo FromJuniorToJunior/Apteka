@@ -1,10 +1,11 @@
 package A1.Apteka.Apteka.Model;
 
 import A1.Apteka.Apteka.Enum.Gender;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -31,14 +32,16 @@ public class User {
     private int age;
     @Column(length = 25, unique = true)
     private String email;
-    @Column(length = 30)
+    @Column(length = 70)
     private String password;
     @Column(length = 12)
     private String phone;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    @LazyCollection(value = LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Comment> comment = new ArrayList<>();
     @ManyToOne(fetch = FetchType.EAGER)
     private Address address;
+    @LazyCollection(value = LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 

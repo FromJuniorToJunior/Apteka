@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.text.DateFormat;
 
 @Getter
 @Setter
@@ -21,7 +20,7 @@ public class Comment {
     @Column
     private String content;
     @Column
-    private DateFormat date;
+    private String date;
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
