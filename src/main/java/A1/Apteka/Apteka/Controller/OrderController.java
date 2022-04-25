@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -66,6 +68,7 @@ public class OrderController implements CRUD<OrderDTO, Order> {
                 cost += anx.getPrice();
             }
             or.setCost(cost);
+            or.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             for (Anxieties anx : or.getAnxieties()
             ) {
                 anx.getOrders().add(or);

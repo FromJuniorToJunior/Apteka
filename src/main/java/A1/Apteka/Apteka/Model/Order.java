@@ -25,6 +25,8 @@ public class Order {
     @Column
     private boolean realized;
     @Column
+    private String date;
+    @Column
     private double cost = 0;
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
