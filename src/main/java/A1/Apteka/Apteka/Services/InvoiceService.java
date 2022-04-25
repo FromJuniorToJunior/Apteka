@@ -1,18 +1,25 @@
 package A1.Apteka.Apteka.Services;
 
+import A1.Apteka.Apteka.Model.Anxieties;
+import A1.Apteka.Apteka.Model.Order;
+import A1.Apteka.Apteka.Repository.OrderRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellUtil;
 import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
+@Service
 public class InvoiceService {
+    @Autowired
+    OrderRepository orderRepository;
     private record MergedRegion(String name, int address) {
     }
 
@@ -23,7 +30,7 @@ public class InvoiceService {
     }
 
 
-    private Workbook invoice() {
+    public Workbook invoice(Order order) {
         Workbook invoice = new XSSFWorkbook();
         LinkedList<Row> rows = new LinkedList<>();
         LinkedList<MergedRegion> mergedRegion = new LinkedList<>();
@@ -211,10 +218,11 @@ public class InvoiceService {
 
         styles.add(new CellStyles("headers2",invoice.createCellStyle()));
         styles.getLast().style.setAlignment(HorizontalAlignment.CENTER);
-        styles.getLast().style.setBottomBorderColor(IndexedColors.AQUA.getIndex());
-        styles.getLast().style.setRightBorderColor(IndexedColors.AQUA.getIndex());
+       // styles.getLast().style.setBottomBorderColor(IndexedColors.AQUA.getIndex());
+       // styles.getLast().style.setRightBorderColor(IndexedColors.AQUA.getIndex());
         styles.getLast().style.setBorderRight(BorderStyle.MEDIUM);
         styles.getLast().style.setBorderBottom(BorderStyle.MEDIUM);
+        styles.getLast().style.setBorderLeft(BorderStyle.MEDIUM);
 
         for (int x = 5; x <= 13; x ++) {
             if(x!=9){
@@ -229,6 +237,28 @@ public class InvoiceService {
 
         }
 
+        styles.add(new CellStyles("body",invoice.createCellStyle()));
+        styles.getLast().style.setBorderRight(BorderStyle.MEDIUM);
+        styles.getLast().style.setBorderBottom(BorderStyle.MEDIUM);
+        styles.getLast().style.setAlignment(HorizontalAlignment.CENTER);
+        styles.getLast().style.setVerticalAlignment(VerticalAlignment.CENTER);
+
+        for (Anxieties anx: order.getAnxieties()
+             ) {
+            int x =0;
+            int row = rows.size();
+            rows.add(sheet.createRow(row));
+            for(int cellNumber =0; cellNumber<14;cellNumber++ ){
+                rows.getLast().createCell(cellNumber).setCellValue(x);
+                rows.getLast().getCell(cellNumber).setCellStyle(styles.getLast().style());
+            }
+
+
+
+
+
+        }
+
 
 
 
@@ -237,7 +267,7 @@ public class InvoiceService {
 
 
     //Save workbook
-    private void saveXlsx(Workbook workbook, String name) {
+    public void saveXlsx(Workbook workbook, String name) {
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(name)) {
             workbook.write(fileOutputStream);
@@ -246,11 +276,4 @@ public class InvoiceService {
         }
     }
 
-    public static void main(String[] args) {
-
-        InvoiceService service = new InvoiceService();
-        service.saveXlsx(service.invoice(), "test.xlsx");
-
-
-    }
 }
