@@ -13,4 +13,8 @@ public interface ModelMapper {
     OrderDTO orderToDTO(Order order);
 
     UserDTO userToDTO(User user);
+
+    AnxInOrderDTO anxInOrderToDTO(AnxInOrder anxInOrder);
+
+    AnxietiesForUserDTO anxForUserDTO(Anxieties anx);
 }

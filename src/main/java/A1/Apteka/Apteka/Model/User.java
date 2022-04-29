@@ -44,5 +44,8 @@ public class User {
     @LazyCollection(value = LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Invoice> invoices;
 
 }

@@ -1,3 +1,4 @@
+/*
 package A1.Apteka.Apteka;
 
 import org.junit.jupiter.api.Test;
@@ -11,3 +12,4 @@ class AptekaApplicationTests {
 	}
 
 }
+*/
