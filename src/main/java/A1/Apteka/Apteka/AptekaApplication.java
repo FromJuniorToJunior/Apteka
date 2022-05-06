@@ -24,6 +24,7 @@ public class AptekaApplication {
 	InvoiceRepository invoiceRepository;
 	@Autowired
 	PdfService pdfService;
+
 /*
 	@Bean
 	public void real(){
