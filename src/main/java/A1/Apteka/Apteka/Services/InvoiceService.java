@@ -18,8 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 @Service
 public class InvoiceService {
-    @Autowired
-    OrderRepository orderRepository;
+
     private record MergedRegion(String name, int address) {
     }
 
@@ -251,7 +250,25 @@ public class InvoiceService {
             for(int cellNumber =0; cellNumber<14;cellNumber++ ){
                 rows.getLast().createCell(cellNumber).setCellValue(x);
                 rows.getLast().getCell(cellNumber).setCellStyle(styles.getLast().style());
+                switch (cellNumber){
+                    case 0 -> rows.getLast().getCell(cellNumber).setCellValue(x);
+                    case 1-> rows.getLast().getCell(cellNumber).setCellValue(anx.getName());
+                    case 2-> rows.getLast().getCell(cellNumber).setCellValue("Brak");
+                    case 3-> rows.getLast().getCell(cellNumber).setCellValue("Szt");
+                    case 4-> rows.getLast().getCell(cellNumber).setCellValue(anx.getAmount());
+                    case 5-> rows.getLast().getCell(cellNumber).setCellValue(x);
+                    case 6-> rows.getLast().getCell(cellNumber).setCellValue(x);
+                    case 7-> rows.getLast().getCell(cellNumber).setCellValue(x);
+                    case 8-> rows.getLast().getCell(cellNumber).setCellValue(x);
+                    case 9-> rows.getLast().getCell(cellNumber).setCellValue("23");
+                    case 10-> rows.getLast().getCell(cellNumber).setCellValue(order.getCost());
+                    case 11-> rows.getLast().getCell(cellNumber).setCellValue(0);
+                    case 12-> rows.getLast().getCell(cellNumber).setCellValue(anx.getPrice());
+                    case 13-> rows.getLast().getCell(cellNumber).setCellValue(0);
+                }
+
             }
+            x++;
 
 
 

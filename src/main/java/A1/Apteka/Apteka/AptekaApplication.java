@@ -17,7 +17,7 @@ public class AptekaApplication {
 	OrderRepository orderRepository;
 	@Bean
 	public void real(){
-		invoiceService.saveXlsx(invoiceService.invoice(orderRepository.findOrderById(1L)),"text.xlsx" );
+		invoiceService.saveXlsx(invoiceService.invoice(orderRepository.findOrderById(2L)),"text.xlsx" );
 	}
 
 	public static void main(String[] args) {
