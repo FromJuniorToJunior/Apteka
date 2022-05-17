@@ -1,3 +1,4 @@
+/*
 package A1.Apteka.Apteka.Security;
 
 import org.springframework.security.core.Authentication;
@@ -14,3 +15,4 @@ public class CustomLogoutHandler implements LogoutHandler {
 
     }
 }
+*/

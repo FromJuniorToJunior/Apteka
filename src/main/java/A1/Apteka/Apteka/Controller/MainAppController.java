@@ -46,7 +46,6 @@ public class MainAppController {
                 .contentType(MediaType.parseMediaType(file.getDocType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getDocName() + "\"")
                 .body(new ByteArrayResource(file.getFileByte()));
-
     }
 
     @PostMapping(value = "/create/invoice")
@@ -63,15 +62,20 @@ public class MainAppController {
 
     @GetMapping(value = "/message/send")
     public ResponseEntity<String> sendMessage() throws MessagingException {
-       // mailService.sendMail((User) session.getAttribute("user"));
-        mailService.readMail();
+        // mailService.sendMail((User) session.getAttribute("user"));
+        //mailService.readMail();
+        mailService.sendOfficialEmail("jbondaruk02@gmail.com", "test", "Przykładowy content wiadomości",
+                "Jarosław Bondaruk", "Java Developer", "jaroslaw.bondaruk@computerplus.com.pl"
+                , "662 522 225", "Technologie Informatyczne");
 
         return ResponseEntity.ok().body("Ok");
     }
-    @GetMapping(value = "/pdf")
-    public void createPdf(){
-        pdfService.writeDocument("test.pdf");
-        pdfService.appendDocument();
+
+    @PostMapping(value = "/pdf")
+    public void createPdf(@RequestParam("code") String code) {
+       /* pdfService.writeDocument("test.pdf");
+        pdfService.appendDocument();*/
+        pdfService.invoice("invoice.pdf", orderRepository.findOrderByNumber(code));
     }
 
 

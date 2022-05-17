@@ -34,6 +34,8 @@ public class Anxieties {
     private String unit;
     @Column
     private int taxRate;
+    @Column
+    private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anxieties")
     private List<Comment> comments;
 /*    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "anxieties")

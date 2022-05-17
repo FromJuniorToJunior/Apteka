@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellUtil;
 import org.apache.poi.ss.util.RegionUtil;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,15 +135,15 @@ public class InvoiceService {
         RegionUtil.setBorderLeft(BorderStyle.MEDIUM, sheet.getMergedRegion(2), sheet);
         RegionUtil.setBorderTop(BorderStyle.MEDIUM, sheet.getMergedRegion(2), sheet);
         RegionUtil.setBorderBottom(BorderStyle.MEDIUM, sheet.getMergedRegion(2), sheet);
-        RichTextString rech = new XSSFRichTextString("Faktura Nr" + System.lineSeparator()+ order.getNumber());
-        rech.applyFont(0,10,fonts.getLast().style());
-        fonts.add(new Fonts("nrLower",invoice.createFont()));
+        RichTextString rech = new XSSFRichTextString("Faktura Nr" + System.lineSeparator() + order.getNumber());
+        rech.applyFont(0, 10, fonts.getLast().style());
+        fonts.add(new Fonts("nrLower", invoice.createFont()));
         fonts.getLast().style.setColor(IndexedColors.WHITE.getIndex());
         fonts.getLast().style.setFontHeightInPoints((short) 12);
         fonts.getLast().style.setBold(true);
-        rech.applyFont(10,34,fonts.getLast().style);
+        rech.applyFont(10, 34, fonts.getLast().style);
 
-        Cell cell = CellUtil.createCell(rows.get(0), 3,"", styles.getLast().style);
+        Cell cell = CellUtil.createCell(rows.get(0), 3, "", styles.getLast().style);
         cell.setCellValue(rech);
 
         //Region 4
@@ -502,13 +503,13 @@ public class InvoiceService {
     public void saveXlsxToDB(Workbook workbook) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
-        workbook.write(baos);
+            workbook.write(baos);
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
 
-        Invoice invoice = new Invoice("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Invoice"+LocalDateTime.now().format(
-                DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss"))+".xlsx" ,
+        Invoice invoice = new Invoice("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "Invoice" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss")) + ".xlsx",
                 (User) session.getAttribute("user"), baos.toByteArray());
         invoiceRepository.save(invoice);
     }

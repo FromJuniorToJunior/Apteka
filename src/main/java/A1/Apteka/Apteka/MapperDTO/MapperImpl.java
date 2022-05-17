@@ -19,7 +19,7 @@ public class MapperImpl implements ModelMapper {
     public AnxietiesDTO anxietiesToDTO(Anxieties anxieties) {
 
         return new AnxietiesDTO(anxieties.getName(), anxieties.getPrice(), anxieties.isOtc(), anxieties.getImg(),
-                anxieties.getAmount(), anxieties.getUnit(), anxieties.getTaxRate());
+                anxieties.getAmount(), anxieties.getUnit(), anxieties.getTaxRate(),anxieties.getDescription());
     }
 
     @Override
@@ -48,7 +48,7 @@ public class MapperImpl implements ModelMapper {
 
     @Override
     public AnxietiesForUserDTO anxForUserDTO(Anxieties anx) {
-        return new AnxietiesForUserDTO(anx.getName(),anx.getPrice(), anx.isOtc());
+        return new AnxietiesForUserDTO(anx.getName(),anx.getPrice(), anx.isOtc(), anx.getDescription());
     }
 
     @Override

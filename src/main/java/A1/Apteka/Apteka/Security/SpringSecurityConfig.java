@@ -1,3 +1,4 @@
+/*
 package A1.Apteka.Apteka.Security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,3 +60,4 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
+*/

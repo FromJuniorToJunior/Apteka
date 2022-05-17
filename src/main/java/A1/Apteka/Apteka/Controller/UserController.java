@@ -9,7 +9,6 @@ import A1.Apteka.Apteka.Repository.UserRepository;
 import A1.Apteka.Apteka.Services.UpdateServiceCRUD;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -27,8 +26,8 @@ public class UserController implements CRUD<UserDTO, User> {
     private AddressRepository addressRepository;
     @Autowired
     private UpdateServiceCRUD updateServiceCRUD;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+/*    @Autowired
+    private PasswordEncoder passwordEncoder;*/
 
 
     @Override
@@ -52,7 +51,7 @@ public class UserController implements CRUD<UserDTO, User> {
     @PostMapping(value = "/create", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> createObject(@RequestBody User object) {
         try {
-            object.setPassword(passwordEncoder.encode(object.getPassword()));
+          /*  object.setPassword(passwordEncoder.encode(object.getPassword()));*/
             addressRepository.save(object.getAddress());
             userRepository.save(object);
             return ResponseEntity.ok().body("User created: " + System.lineSeparator() + mapper.userToDTO(object));

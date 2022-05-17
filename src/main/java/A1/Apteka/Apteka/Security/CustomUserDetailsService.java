@@ -1,3 +1,4 @@
+/*
 package A1.Apteka.Apteka.Security;
 
 import A1.Apteka.Apteka.Model.User;
@@ -30,3 +31,4 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new CustomUserDetails(user);
     }
 }
+*/

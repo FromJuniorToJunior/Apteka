@@ -13,8 +13,12 @@ import javax.mail.*;
 import javax.mail.internet.MimeMessage;
 import javax.mail.search.FlagTerm;
 import java.io.File;
+import java.io.FileReader;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Properties;
+import java.util.Scanner;
 
 
 @Service
@@ -50,6 +54,45 @@ public class MailService {
 
     }
 
+    public void sendOfficialEmail(String emailTo, String subject, String content, String name, String workplace, String email, String phone, String department) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        try {
+            FileSystemResource img1 = new FileSystemResource(new File("./cplus1.png"));
+            FileSystemResource img2 = new FileSystemResource(new File("./f.jpg"));
+            FileSystemResource img3 = new FileSystemResource(new File("./in.jpg"));
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setTo(emailTo);
+            helper.setSubject(subject);
+
+
+            //read stopka file
+            String stopka = content + System.lineSeparator();
+            Scanner scanner = new Scanner(new File("./stopka.txt"));
+            while (scanner.hasNextLine()) {
+                stopka += scanner.nextLine();
+            }
+            stopka = stopka.replace("[[name]]", name);
+            stopka = stopka.replace("[[workplace]]", workplace);
+            stopka = stopka.replace("[[phone]]", phone);
+            stopka = stopka.replace("[[email]]", email);
+            stopka = stopka.replace("[[email2]]", email);
+            stopka = stopka.replace("[[department]]", department);
+            scanner.close();
+            helper.setText(stopka, true);
+            helper.addInline("img1", img1);
+            helper.addInline("img2", img2);
+            helper.addInline("img3", img3);
+
+        } catch (Exception e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
+
+        javaMailSender.send(message);
+
+
+    }
+
     public void readMail() {
         try {
 
@@ -75,7 +118,6 @@ public class MailService {
             // retrieve the messages from the folder in an array and print it
             Message[] messages = emailFolder.getMessages();
             System.out.println("messages.length---" + messages.length);
-
 
 
             //close the store and folder objects
