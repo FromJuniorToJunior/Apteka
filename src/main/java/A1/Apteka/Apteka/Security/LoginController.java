@@ -1,3 +1,4 @@
+/*
 package A1.Apteka.Apteka.Security;
 
 import org.springframework.context.annotation.Configuration;
@@ -13,4 +14,4 @@ public class LoginController  implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
     }
 
-}
+}*/

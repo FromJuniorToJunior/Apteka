@@ -54,12 +54,16 @@ public class AnxietiesController implements CRUD<AnxietiesDTO, Anxieties> {
                                                    @RequestParam("price") double price,
                                                    @RequestParam("otc") boolean otc,
                                                    @RequestParam("img") MultipartFile img,
-                                                   @RequestParam("amount") int amount) {
+                                                   @RequestParam("amount") int amount,
+                                                   @RequestParam("unit") String unit,
+                                                   @RequestParam("taxRate") int taxRate) {
         Anxieties object = new Anxieties();
         object.setAmount(amount);
         object.setName(name);
         object.setPrice(price);
         object.setOtc(otc);
+        object.setUnit(unit);
+        object.setTaxRate(taxRate);
         try {
             object.setImg(img.getBytes());
             anxietiesRepository.save(object);

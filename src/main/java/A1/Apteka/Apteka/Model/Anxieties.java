@@ -30,10 +30,18 @@ public class Anxieties {
     private byte[] img;
     @Column
     private int amount;
+    @Column
+    private String unit;
+    @Column
+    private int taxRate;
+    @Column
+    private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anxieties")
     private List<Comment> comments;
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "anxieties")
-    private List<Order> orders;
+/*    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "anxieties")
+    private List<Order> orders;*/
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anxieties")
+    private List<AnxInOrder> anxInOrders;
 
 
 }

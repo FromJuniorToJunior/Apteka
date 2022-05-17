@@ -2,6 +2,7 @@ package A1.Apteka.Apteka.Controller;
 
 import A1.Apteka.Apteka.Controller.CRUD.CRUD;
 import A1.Apteka.Apteka.MapperDTO.MapperImpl;
+import A1.Apteka.Apteka.Model.AnxInOrder;
 import A1.Apteka.Apteka.Model.Anxieties;
 import A1.Apteka.Apteka.Model.ModelDTO.OrderDTO;
 import A1.Apteka.Apteka.Model.Order;
@@ -58,22 +59,16 @@ public class OrderController implements CRUD<OrderDTO, Order> {
         try {
             or.setUser((User) session.getAttribute("user"));
             or.setRealized(object.isRealized());
-            for (Anxieties anx : object.getAnxieties()
-            ) {
-                or.getAnxieties().add(anxietiesRepository.findAnxByName(anx.getName()));
+          for(AnxInOrder anxInOrder: object.getAnxInOrders()){
+              or.getAnxInOrders().add(new AnxInOrder(anxietiesRepository.findAnxByName(anxInOrder.getAnxieties().getName()),or, anxInOrder.getAmount()));
+          }
+          //Calculate total cost
+            for (AnxInOrder anx:or.getAnxInOrders()
+                 ) {
+                or.setCost(or.getCost()+anx.getAnxieties().getPrice()*anx.getAmount());
             }
-            double cost = or.getCost();
-            for (Anxieties anx : or.getAnxieties()
-            ) {
-                cost += anx.getPrice();
-            }
-            or.setCost(cost);
-            or.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            for (Anxieties anx : or.getAnxieties()
-            ) {
-                anx.getOrders().add(or);
-
-            }
+          or.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            or.setNumber("INV"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss")));
 
             orderRepository.save(or);
 

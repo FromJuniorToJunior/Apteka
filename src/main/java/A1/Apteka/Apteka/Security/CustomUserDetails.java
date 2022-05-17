@@ -1,3 +1,4 @@
+/*
 package A1.Apteka.Apteka.Security;
 
 import A1.Apteka.Apteka.Model.User;
@@ -54,3 +55,4 @@ public class CustomUserDetails implements UserDetails {
         return user.getName() + " " + user.getSurname();
     }
 }
+*/
