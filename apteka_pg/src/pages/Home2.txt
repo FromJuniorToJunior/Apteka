@@ -1,0 +1,62 @@
+import React,{useState} from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/styles.css';
+import MedicineList from '../components/MedicineList';
+
+
+function Home() {
+
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [data, setData] = React.useState([]);
+ 
+
+  React.useEffect(() => {
+    const url = "http://localhost:8081/anxieties/anxieties";
+    
+    fetch(url,{
+      method: 'GET',
+      headers:{
+        'Authorization': sessionStorage.getItem('token')
+      } 
+    })
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.log(error));
+  }, []);
+
+  React.useEffect(() => {
+    if (data.length !== 0) {
+      setIsLoading(false);
+    }
+    console.log(data);
+  }, [data]);
+
+  
+  return (
+    <div className='home'>
+        <section className='py-5'>
+            <div className="container px-4 px-lg-5 mt-5">
+                <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+               
+                  {isLoading ? (
+                    "Loading..."
+                  ) : (
+                    data.map((user, key) => (
+                      <MedicineList key={key}
+                       image={user.img} 
+                       name={user.name} 
+                       price={user.price} 
+                       description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."/>
+                    ))
+                  )}
+
+                </div>
+                
+            </div>
+        </section>    
+      
+    </div>
+  )
+}
+
+export default Home

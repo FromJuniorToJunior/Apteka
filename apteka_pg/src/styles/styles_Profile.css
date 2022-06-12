@@ -1,0 +1,30 @@
+.card2 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    margin-top: 15px;
+}
+
+.card2-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.profile{
+    background-color: #e9bcb7;
+  background-image: linear-gradient(315deg, #e9bcb7 0%, #29524a 74%);
+  }
+.pokaz_haslo{
+    cursor: pointer;
+    text-decoration:underline;
+}
+.form-group > .profile_input{
+    border-bottom: 2px solid grey;
+}
