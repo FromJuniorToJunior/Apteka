@@ -1,7 +1,20 @@
 version: '3.1'
 
 services:
-
+  front:
+    image: front:1
+    depends_on:
+      - postgres
+    ports:
+      - 3000:3000
+  apteka:
+    image: apteka:1
+    depends_on:
+      - postgres
+    ports:
+      - "8081:8081"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   adminer:
     image: adminer
     restart: always
@@ -36,6 +49,7 @@ services:
       DB_PASSWORD: postgres
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_FRONTEND_URL: http://keycloak:8080/auth
       # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
       #JDBC_PARAMS: "ssl=true"
     ports:

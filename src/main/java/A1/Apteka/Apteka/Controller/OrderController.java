@@ -9,10 +9,15 @@ import A1.Apteka.Apteka.Model.Order;
 import A1.Apteka.Apteka.Model.User;
 import A1.Apteka.Apteka.Repository.AnxietiesRepository;
 import A1.Apteka.Apteka.Repository.OrderRepository;
+import A1.Apteka.Apteka.Repository.UserRepository;
+import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,9 +36,12 @@ public class OrderController implements CRUD<OrderDTO, Order> {
     private MapperImpl mapper;
     @Autowired
     private AnxietiesRepository anxietiesRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
-    @GetMapping(value = "/get/orders", produces = "application/json")
+    @RolesAllowed("admin")
+    @GetMapping(value = "/get/all", produces = "application/json")
     public List<OrderDTO> getObjects() {
         return orderRepository.findAll()
                 .stream()
@@ -52,8 +60,29 @@ public class OrderController implements CRUD<OrderDTO, Order> {
     }
 
     @Override
+    public ResponseEntity<String> createObject(Order object) {
+        return null;
+    }
+
+    @RolesAllowed("user")
+    @GetMapping(value = "/get/session", produces = "application/json")
+    public List<OrderDTO> getOrdersSession(KeycloakAuthenticationToken keycloakAuthenticationToken){
+        SimpleKeycloakAccount account = (SimpleKeycloakAccount) keycloakAuthenticationToken.getDetails();
+        AccessToken token = account.getKeycloakSecurityContext().getToken();
+        User user = userRepository.findByUserEmail(token.getEmail());
+        session.setAttribute("user", user);
+
+        return user.getOrders().stream().map(mapper::orderToDTO).toList();
+    }
+
+
+    @RolesAllowed("user")
     @PostMapping(value = "/create/order", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> createObject(@RequestBody Order object) {
+    public ResponseEntity<String> createObject(@RequestBody Order object,KeycloakAuthenticationToken keycloakAuthenticationToken) {
+        SimpleKeycloakAccount account = (SimpleKeycloakAccount) keycloakAuthenticationToken.getDetails();
+        AccessToken token = account.getKeycloakSecurityContext().getToken();
+        User user = userRepository.findByUserEmail(token.getEmail());
+        session.setAttribute("user", user);
         Order or = new Order();
 
         try {

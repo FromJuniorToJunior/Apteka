@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.security.RolesAllowed;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,7 @@ public class AnxietiesController implements CRUD<AnxietiesDTO, Anxieties> {
                     .map(mapper::anxietiesToDTO)
                     .collect(Collectors.toList());
         } catch (Exception e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
             return null;
         }
     }
@@ -49,6 +52,7 @@ public class AnxietiesController implements CRUD<AnxietiesDTO, Anxieties> {
         return null;
     }
 
+    @RolesAllowed("admin")
     @PostMapping(value = "/create", produces = "application/json")
     public ResponseEntity<String> createObjectProf(@RequestParam("name") String name,
                                                    @RequestParam("price") double price,
@@ -56,7 +60,8 @@ public class AnxietiesController implements CRUD<AnxietiesDTO, Anxieties> {
                                                    @RequestParam("img") MultipartFile img,
                                                    @RequestParam("amount") int amount,
                                                    @RequestParam("unit") String unit,
-                                                   @RequestParam("taxRate") int taxRate) {
+                                                   @RequestParam("taxRate") int taxRate,
+                                                   @RequestParam("description") String desc) {
         Anxieties object = new Anxieties();
         object.setAmount(amount);
         object.setName(name);
@@ -64,6 +69,7 @@ public class AnxietiesController implements CRUD<AnxietiesDTO, Anxieties> {
         object.setOtc(otc);
         object.setUnit(unit);
         object.setTaxRate(taxRate);
+        object.setDescription(desc);
         try {
             object.setImg(img.getBytes());
             anxietiesRepository.save(object);
